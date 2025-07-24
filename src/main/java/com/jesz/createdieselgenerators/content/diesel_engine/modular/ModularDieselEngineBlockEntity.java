@@ -79,7 +79,7 @@ public class ModularDieselEngineBlockEntity extends GeneratingKineticBlockEntity
 
         if (!fluidCapability.isPresent())
             refreshCapability();
-
+		
         if (side == null || (side == Direction.UP && getBlockState().getValue(PIPE)))
             return fluidCapability.cast();
         return super.getCapability(cap, side);
@@ -208,11 +208,12 @@ public class ModularDieselEngineBlockEntity extends GeneratingKineticBlockEntity
     }
 
     public void updateConnectivity() {
-        if (soundInstance != null)
-            soundInstance = null;
         updateConnectivity = false;
-        if (level.isClientSide)
+        if (level.isClientSide){
+			if (soundInstance != null)
+				soundInstance = null;
             return;
+		}
         if (!isController())
             return;
         ConnectivityHandler.formMulti(this);
